@@ -1192,17 +1192,16 @@ namespace Microsoft.EntityFrameworkCore.Query
         [MemberData(nameof(IsAsyncData))]
         public virtual Task Where_conditional_with_anonymous_type(bool async)
         {
-            return AssertTranslationFailed(
-                () => AssertQuery(
-                    async,
-                    ss => from g in ss.Set<Gear>()
-                          orderby g.Nickname
-                          where (g.LeaderNickname != null
-                                  ? new { g.HasSoulPatch }
-                                  : null)
-                              == null
-                          select g.Nickname,
-                    assertOrder: true));
+            return AssertQuery(
+                async,
+                ss => from g in ss.Set<Gear>()
+                        orderby g.Nickname
+                        where (g.LeaderNickname != null
+                                ? new { g.HasSoulPatch }
+                                : null)
+                            == null
+                        select g.Nickname,
+                assertOrder: true);
         }
 
         [ConditionalTheory]
